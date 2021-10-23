@@ -4,11 +4,10 @@
 
 * [Description](#description)
 * [Deployment](#deployment)
-* [Built With](#built-with)
-* [Contributing](#contributing)
+* [Technologies](#technologies)
 * [Authors](#authors)
+* [Contributions](#contributions)
 * [License](#license)
-* [Acknowledgements](#acknowledgements)
 
 ## Description
 The user can add expenses and deposits to their budget with or without a connection. When entering transactions offline, the user will have their total populated when brought back online.
@@ -18,7 +17,7 @@ The user can add expenses and deposits to their budget with or without a connect
 
 
 
-## Technologies Used
+## Technologies
 * HTML
 * Bootstrap
 * CSS
@@ -29,12 +28,16 @@ The user can add expenses and deposits to their budget with or without a connect
 * Mongoose
 
 
-## Author
+## Authors
 Alex Palmer
 
 
 ## Contributions
 * UR starter code
 * UR class activities
+
+
+## License
+MIT
 
 

@@ -10,16 +10,16 @@ request.onupgradeneeded = function(e) {
     //create object store 
     db.createObjectStore(["incTx"], { autoIncrement: true });
 }
+request.onerror = function(e) {
+    console.log("Error");
+};
     request.onsuccess = function(e) {
       db = e.target.result;
       // make sure app is online before checking db
       if (navigator.onLine){
-          console.log('app online');
+          console.log('online');
           checkDatabase();
         }
-    };
-    request.onerror = function(e) {
-        console.log("There was an error");
     };
 
     function checkDatabase() {
@@ -28,12 +28,12 @@ request.onupgradeneeded = function(e) {
         store = tx.objectStore(["incTx"]);
         // all records set to variable all
         all = store.getAll();
-
+        transactions = all.result.length;
         all.onsuccess = function (){
-            if(all.result.length > 0){
+            if(transactions > 0){
+                // send to server
                 fetch("/api/transaction/bulk",{
                     method: "POST",
-                    body: JSON.stringify(all.result),
                     headers:{
                         Accept: "application/json, text/plain, */*",
                         "Content-Type": "application/json"

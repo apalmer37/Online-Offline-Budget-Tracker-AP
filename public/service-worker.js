@@ -1,3 +1,4 @@
+
 const FILES_TO_CACHE = [
   "/",
   "./index.html",
@@ -20,7 +21,7 @@ self.addEventListener("install", event => {
       );
     });
 
-// The activate handler takes care of cleaning up old caches.
+// The activate handler will clean up old caches.
 self.addEventListener("activate", event => {
   const currentCaches = [STATIC_CACHE, RUNTIME_CACHE];
   event.waitUntil(
@@ -57,14 +58,13 @@ self.addEventListener("fetch", event => {
   if (event.request.url.includes("/api/images")) {
     // make network request and fallback to cache if network request fails (offline)
     event.respondWith(
-      caches.open(RUNTIME_CACHE).then(async cache => {
-        try {
-          const response = await fetch(event.request);
-          cache.put(event.request, response.clone());
-          return response;
-        } catch (e) {
-          return await caches.match(event.request);
-        }
+      caches.open(RUNTIME_CACHE).then(cache => {
+        return fetch(event.request)
+          .then(response => {
+            cache.put(event.request, response.clone());
+            return response;
+          })
+          .catch(() => caches.match(event.request));
       })
     );
     return;
@@ -88,3 +88,5 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
+console.log("Hello from your service worker!");

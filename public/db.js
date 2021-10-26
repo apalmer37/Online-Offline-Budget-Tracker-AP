@@ -28,9 +28,8 @@ request.onerror = function(e) {
         store = tx.objectStore(["incTx"]);
         // all records set to variable all
         all = store.getAll();
-        transactions = all.result.length;
         all.onsuccess = function (){
-            if(transactions > 0){
+            if(all.result.length > 0){
                 // send to server
                 fetch("/api/transaction/bulk",{
                     method: "POST",

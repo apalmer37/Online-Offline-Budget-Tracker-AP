@@ -13,6 +13,7 @@ const FILES_TO_CACHE = [
 const STATIC_CACHE = "static-cache-v1";
 const RUNTIME_CACHE = "runtime-cache";
 
+// install
 self.addEventListener("install", event => {
   event.waitUntil(
     caches
@@ -59,14 +60,13 @@ self.addEventListener("fetch", event => {
   if (event.request.url.includes("/api/images")) {
     // make network request and fallback to cache if network request fails (offline)
     event.respondWith(
-      caches.open(RUNTIME_CACHE).then(async cache => {
-        try {
-          const response = await fetch(event.request);
-          cache.put(event.request, response.clone());
-          return response;
-        } catch (e) {
-          return await caches.match(event.request);
-        }
+      caches.open(RUNTIME_CACHE).then(cache => {
+        return fetch(event.request)
+          .then(response => {
+            cache.put(event.request, response.clone());
+            return response;
+          })
+          .catch(() => caches.match(event.request));
       })
     );
     return;

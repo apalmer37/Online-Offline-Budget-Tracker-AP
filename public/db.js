@@ -3,10 +3,10 @@ tx,
 store;
 
 // open new db request for "budgetDB" database
-const request = indexedDB.open("budgetDB", 1)
+const request = window.indexedDB.open("budgetDB", 1)
 
 request.onupgradeneeded = function(e) {
-    const db = e.target.result;
+    const db = request.result;
     //create object store 
     db.createObjectStore(["incTx"], { autoIncrement: true });
 }
@@ -14,18 +14,19 @@ request.onerror = function(e) {
     console.log("Error");
 };
     request.onsuccess = function(e) {
-      db = e.target.result;
+      db = request.result;
       // make sure app is online before checking db
-      if (navigator.onLine){
-          console.log('online');
+    //   if (navigator.onLine){
+    //       console.log('online');
           checkDatabase();
         }
-    };
+    // };
 
     function checkDatabase() {
         tx = db.transaction(["incTx"], "readwrite");
         // object store access
         store = tx.objectStore(["incTx"]);
+        transactions = all.result.length;
         // all records set to variable all
         all = store.getAll();
         all.onsuccess = function (){

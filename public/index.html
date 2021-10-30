@@ -43,16 +43,20 @@
   </div>
   <script src="index.js"></script>
   <script src="db.js"></script>
-  <script>
-    // register service worker
-    if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("service-worker.js")
-        .then(reg => {
-          console.log("We found your service worker file!", reg);
-        });
-    });
-  }
+  <script type="text/javascript">
+    (function() {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("./service-worker.js")
+          .then(res => {
+            console.log(res);
+            console.log("Service Worker registered successfully.");
+          })
+          .catch(error =>
+            console.log("Service Worker registration failed:", error)
+          );
+      }
+    })();
   </script>
 </body>
 </html>

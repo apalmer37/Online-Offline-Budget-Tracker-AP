@@ -38,6 +38,6 @@ Alex Palmer
 
 
 ## License
-MIT
+ISC
 
 
